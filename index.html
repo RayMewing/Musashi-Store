@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musashi Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* === TEMA & BACKGROUND KESELURUHAN === */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Latar belakang dengan gradient ungu agar tema ungunya lebih terasa */
+            background: linear-gradient(rgba(65, 14, 92, 0.7), rgba(20, 5, 30, 0.9)), 
+                        url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiAmkA2F4ZANvwB9t4DAo_0LD0cfE3jsmV-iFpy5XqDUeGHZuYVMt5foM&s=10');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* === CONTAINER UTAMA (KARTU PROFILE) === */
+        .profile-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            z-index: 10; /* Agar berada di atas animasi */
+            margin: 40px 0;
+            padding-bottom: 30px;
+        }
+
+        /* === BAGIAN BANNER & FOTO PROFIL === */
+        .header-section {
+            position: relative;
+            width: 100%;
+            height: 160px;
+        }
+
+        .banner-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-pic {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid #6b21a8; /* Border ungu */
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* === TEKS & INFORMASI === */
+        .info-section {
+            text-align: center;
+            margin-top: 60px;
+            padding: 0 20px;
+        }
+
+        .info-section h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* === TOMBOL LINK === */
+        .links-container {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 0 25px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 14px 20px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .link-btn:hover {
+            background: rgba(168, 85, 247, 0.5); /* Hover ungu terang */
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .link-btn i {
+            font-size: 22px;
+        }
+
+        /* Khusus warna ikon agar lebih hidup */
+        .fa-whatsapp { color: #25D366; }
+        .fa-tiktok { color: #ffffff; text-shadow: 1px 1px 0 #ff0050, -1px -1px 0 #00f2fe; }
+
+        /* === ANIMASI JATUH & BERPUTAR === */
+        .falling-item {
+            position: fixed;
+            top: -10vh;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1; /* Di belakang kartu */
+            opacity: 0.6;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+
+        @keyframes fallAndRotate {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(115vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <div class="header-section">
+            <img src="https://files.catbox.moe/kzwo5l.png" alt="Banner Background" class="banner-img">
+            <img src="https://files.catbox.moe/uj5ibc.png" alt="Profile Picture" class="profile-pic">
+        </div>
+
+        <div class="info-section">
+            <h1>Musashi Store</h1>
+        </div>
+
+        <div class="links-container">
+            <a href="https://wa.me/message/EPLSM76LIOGLG1" class="link-btn" target="_blank">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="https://www.tiktok.com/@creatoranime15?_r=1&_t=ZS-94uDGDL8QJM" class="link-btn" target="_blank">
+                <i class="fab fa-tiktok"></i> TikTok
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function createFallingImage() {
+            // Menggunakan gambar foto profil kamu untuk efek yang jatuh
+            const imageUrl = 'https://files.catbox.moe/3x3n5m.png'; 
+            const img = document.createElement('img');
+            
+            img.src = imageUrl;
+            img.classList.add('falling-item');
+            
+            // Random ukuran dari 20px sampai 45px
+            const size = Math.random() * 25 + 20; 
+            img.style.width = `${size}px`;
+            img.style.height = `${size}px`;
+            
+            // Random posisi dari sisi kiri ke kanan (0% - 100% lebar layar)
+            const leftPos = Math.random() * 100;
+            img.style.left = `${leftPos}vw`;
+            
+            // Random durasi jatuh agar sangat pelan (antara 12 sampai 25 detik)
+            const duration = Math.random() * 13 + 12; 
+            
+            // Terapkan animasi
+            img.style.animation = `fallAndRotate ${duration}s linear forwards`;
+            
+            document.body.appendChild(img);
+            
+            // Hapus elemen gambar dari HTML setelah selesai animasi agar web tidak lemot
+            setTimeout(() => {
+                img.remove();
+            }, duration * 1000);
+        }
+
+        // Bikin gambar baru yang jatuh setiap 1.5 detik
+        setInterval(createFallingImage, 1500);
+    </script>
+
+</body>
+</html>
